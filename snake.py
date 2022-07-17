@@ -15,7 +15,7 @@ def shp():
 
 # random color generator function
 def clr():
-    c = choice(["green", "red", "blue", "orange", "yellow", "violet"])
+    c = choice(["green", "red", "blue", "orange", "pink", "violet"])
     return c
 
 
