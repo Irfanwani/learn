@@ -22,6 +22,7 @@ paddle1.shape("square")
 paddle1.penup()
 paddle1.shapesize(5, 1)
 paddle1.goto(-240, 0)
+paddle1.color('green')
 
 paddle2 = Turtle()
 paddle2.speed(0)
@@ -29,6 +30,8 @@ paddle2.shape("square")
 paddle2.penup()
 paddle2.shapesize(5, 1)
 paddle2.goto(240, 0)
+paddle2.color('orange')
+
 
 # adding ball to the game
 ball = Turtle()
@@ -62,13 +65,6 @@ def seconddown():
         paddle2.sety(y - 10)
 
 
-wn.onkey(firstup, "w")
-wn.onkey(firstdown, "d")
-
-wn.onkey(secondup, "Up")
-wn.onkey(seconddown, "Down")
-wn.listen()
-
 xin = 1
 yin = 1
 
@@ -79,44 +75,67 @@ score2 = 0
 pen1 = Turtle()
 pen1.speed(0)
 pen1.penup()
-pen1.goto(-260, 260)
+pen1.goto(-210, 260)
 pen1.hideturtle()
-pen1.write(f'Score1: {score1}')
+pen1.write(f"Score1: {score1}")
 
 pen2 = Turtle()
 pen2.speed(0)
 pen2.penup()
-pen2.goto(240, 260)
+pen2.goto(210, 260)
 pen2.hideturtle()
-pen2.write(f'Score2: {score2}')
+pen2.write(f"Score2: {score2}")
 
+wn.onkey(firstup, "w")
+wn.onkey(firstdown, "d")
+
+wn.onkey(secondup, "Up")
+wn.onkey(seconddown, "Down")
+
+wn.listen()
+
+
+spd = 2
 while True:
     x = ball.xcor()
     y = ball.ycor()
-    ball.goto(x+xin, y+yin)
+    ball.goto(x + xin, y + yin)
 
     if y >= 240:
-        yin = -1
-    
+        yin = -spd
+
     if y <= -240:
-        yin = 1
+        yin = spd
 
-    
-    if x <= paddle1.xcor() + 20 and x >= paddle1.xcor() and y <= paddle1.ycor() + 50 and y >= paddle1.ycor() - 50:
-        xin = 1
-        score1 += 1
-        pen1.clear()
-        pen1.write(f'Score1: {score1}')
-    if x >= paddle2.xcor() - 20 and x <= paddle2.xcor() and y <= paddle2.ycor() + 50 and y >= paddle2.ycor() - 50:
-        xin = -1
+    if (
+        x <= paddle1.xcor() + 20
+        and x >= paddle1.xcor()
+        and y <= paddle1.ycor() + 50
+        and y >= paddle1.ycor() - 50
+    ):
+        xin = spd
+        
+    if (
+        x >= paddle2.xcor() - 20
+        and x <= paddle2.xcor()
+        and y <= paddle2.ycor() + 50
+        and y >= paddle2.ycor() - 50
+    ):
+        xin = -spd
         score2 += 1
+
+
+    if x >= 240:
+        score1 += 1
+        xin -= spd
+        pen1.clear()
+        pen1.write(f"Score1: {score1}")
+
+    if x <= -240:
+        score2 += 1
+        xin = spd
         pen2.clear()
-        pen2.write(f'Score2: {score2}')
+        pen2.write(f"Score2: {score2}")
 
 
-    if x >= 240 or x <= -240:
-        ball.goto(0, 0)
-        break
-
-    
 wn.mainloop()
