@@ -4,3 +4,6 @@ def testfun():
 
 def main():
 	testfun()
+
+if __name__ == "__main__":
+	main()
